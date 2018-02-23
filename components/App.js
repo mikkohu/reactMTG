@@ -26,35 +26,6 @@ const getFilteredCards = (filter, type) => {
 
 export class FilterableCardList extends Component {
 
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            nameFilter: '',
-            colorFilter: [],
-            sorting: 'name'
-        }
-
-        this.handleNameFilterChange =
-            this.handleNameFilterChange.bind(this);
-        this.handleColorFilterChange =
-            this.handleColorFilterChange.bind(this);
-        this.changeSort = this.changeSort.bind(this);
-    }
-
-    handleNameFilterChange(nameFilter) {
-        this.setState({
-            nameFilter: nameFilter
-        });
-    }
-
-    handleColorFilterChange(colorFilter) {
-        this.setState({
-            colorFilter: colorFilter
-    });
-    }
-
-
     changeSort(key) {
         cardArray.sort((a,b) => {
                 if(a.hasOwnProperty(key) && b.hasOwnProperty(key)) {

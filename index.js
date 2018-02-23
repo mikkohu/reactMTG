@@ -4,10 +4,15 @@ import ReactDom from 'react-dom';
 import {Provider} from 'react-redux';
 import {createStore} from 'redux'
 
-import {FilterableCardList} from './containers/App'
+import {FilterableCardList} from './components/App'
 
 require('./styles/style.less');
 
 // let store = createStore
+const store = createStore(reducer);
 
-ReactDom.render(<div><FilterableCardList /></div>, document.getElementById('app'));
+ReactDom.render(
+    <Provider store={store}>
+        <div><FilterableCardList /></div>
+    </Provider>,
+    document.getElementById('app'));

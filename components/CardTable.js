@@ -1,5 +1,6 @@
 import React, {Component} from "react";
 
+
 class CardRow extends Component {
     parseManaCost(manaCost) {
 
@@ -53,7 +54,7 @@ export class CardTable extends Component {
             <table>
                 <thead>
                 <tr>
-                    <th><a href='#' onClick={(e) => this.changeSortValue('name', e)}>Name</a></th>
+                    <th><a href='#' onClick={dispatch}>Name</a></th>
                     <th><a href='#' onClick={(e) => this.changeSortValue('type', e)}>Type</a></th>
                     <th><a href='#' onClick={(e) => this.changeSortValue('cmc', e)}>Mana Cost</a></th>
                 </tr>
