@@ -1,67 +1,38 @@
 import React, {Component} from 'react';
-import {SearchBar} from './SearchBar';
-import {CardTable} from './CardTable';
-
+import {connect} from 'react-redux';
+import {CardSearchBar} from "../containers/CardSearchBar";
+import {FilteredCardTable} from "../containers/FilteredCardTable";
+import {fetchCards} from "../actions";
+import PropTypes from 'prop-types';
 const CARDSJSON = require('./carddata.json');
-const maxLength = 25;
-let cardArray = Object.values(CARDSJSON);
+const cards = Object.values(CARDSJSON);
 
-const getFilteredCards = (filter, type) => {
-    switch (type) {
-        case 'NAME_FILTER':
-            return (filter) => {
-                // let filteredCards =
-            }
 
-        case 'COLOR_FILTER' :
-            return (filter) => {
+class FilterableCardList extends Component {
 
-            }
-        default:
-            return cards;
+    constructor(props) {
+        super(props);
     }
 
-}
-
-
-export class FilterableCardList extends Component {
-
-    changeSort(key) {
-        cardArray.sort((a,b) => {
-                if(a.hasOwnProperty(key) && b.hasOwnProperty(key)) {
-                    let x = a[key];
-                    let y = b[key];
-                    return x>y ? 1 : x<y ? -1 : 0;
-                }
-                if(a.hasOwnProperty(key) && !b.hasOwnProperty(key)) {
-                    return 1;
-                }
-                if(!a.hasOwnProperty(key) && b.hasOwnProperty(key)) {
-                    return -1;
-                }
-                if(!a.hasOwnProperty(key) && !b.hasOwnProperty(key)) {
-                    return 0;
-                }
-            }
-        );
-        this.setState({
-            sorting: key
-        });
+    componentDidMount() {
+        this.props.dispatch(fetchCards());
     }
-
 
 	render() {
-		return (
-			<div>
-                <SearchBar nameFilter = {this.state.nameFilter}
-                           colorFilter = {this.state.colorFilter}
-                           onNameFilterChange = {this.handleNameFilterChange}
-                           onColorFilterChange = {this.handleColorFilterChange}/>
-                <CardTable cards = {cardArray}
-                           nameFilter = {this.state.nameFilter}
-                           colorFilter = {this.state.colorFilter}
-                           onChangeSort = {this.changeSort}/>
-			</div>
-		);
+	    return (<div>
+            <CardSearchBar/>
+            <FilteredCardTable/>
+        </div>)
 	}
 }
+
+FilteredCardTable.propTypes = {
+    isFetching: PropTypes.bool.isRequired,
+    dispatch: PropTypes.func.isRequired
+}
+
+function mapStateToProps(state) {
+    return {isRequired: state.isRequired};
+}
+
+export default connect(mapStateToProps)(FilterableCardList)

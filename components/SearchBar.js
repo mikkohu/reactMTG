@@ -1,50 +1,27 @@
 import React, {Component} from "react";
+import PropTypes from 'prop-types';
 
-class ColorCheckbox extends Component {
-    render() {
-        return (
-            <input type='checkbox' onChange={(e) => this.props.onChange(this.props.color)}/>
-        )
-    }
+const SearchBar = ({nameFilter, colorFilter, onNameFilterChange, onColorFilterChange}) => (
+    <form>
+        <input type ="text" placeholder="Card name" value={nameFilter}
+               onChange={(e) => onNameFilterChange(e.target.value)}>
+
+        </input>
+        <div>
+            <input type='checkbox' onChange={() => onColorFilterChange('White')}/> White
+            <input type='checkbox' onChange={() => onColorFilterChange('Blue')}/> Blue
+            <input type='checkbox' onChange={() => onColorFilterChange('Black')}/> Black
+            <input type='checkbox' onChange={() => onColorFilterChange('Red')}/> Red
+            <input type='checkbox' onChange={() => onColorFilterChange('Green')}/> Green
+        </div>
+    </form>
+)
+
+SearchBar.propTypes = {
+    nameFilter: PropTypes.string.isRequired,
+    colorFilter: PropTypes.array.isRequired,
+    onNameFilterChange: PropTypes.func.isRequired,
+    onColorFilterChange: PropTypes.func.isRequired
 }
 
-export class SearchBar extends Component {
-
-    constructor(props) {
-        super(props);
-        this.handleNameFilterChange = this.handleNameFilterChange.bind(this);
-        this.handleColorFilterChange = this.handleColorFilterChange.bind(this);
-    }
-
-    handleNameFilterChange(event) {
-        this.props.onNameFilterChange(event.target.value);
-    }
-
-    handleColorFilterChange(color) {
-        let colorFilter = this.props.colorFilter;
-
-        if(colorFilter.indexOf(color) < 0) {
-            colorFilter.push(color);
-        } else if (colorFilter.indexOf(color) > -1) {
-            colorFilter.splice(colorFilter.indexOf(color), 1)
-        }
-        this.props.onColorFilterChange(colorFilter);
-    }
-
-    render() {
-        return (
-            <form>
-                <input type ="text" placeholder="Card name" value={this.props.nameFilter} onChange={this.handleNameFilterChange}>
-
-                </input>
-                <div>
-                    <ColorCheckbox color={"White"}  onChange={this.handleColorFilterChange}/> White
-                    <ColorCheckbox color={"Blue"} onChange={this.handleColorFilterChange}/> Blue
-                    <ColorCheckbox color={"Black"} onChange={this.handleColorFilterChange}/> Black
-                    <ColorCheckbox color={"Red"} onChange={this.handleColorFilterChange}/> Red
-                    <ColorCheckbox color={"Green"} onChange={this.handleColorFilterChange}/> Green
-                </div>
-            </form>
-        )
-    }
-}
+export default SearchBar;
