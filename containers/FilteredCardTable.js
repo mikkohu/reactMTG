@@ -5,9 +5,14 @@ import CardTable from "../components/CardTable";
 
 const filterCards = (state) => {
     const filteredCards = [];
-    const {nameFilter, colorFilter, key, cards} = state;
+    const {nameFilter, colorFilter, key} = state.cardtable;
+    const cards = state.cards.cards
     let maxResults = 500;
     let i = 0;
+
+    if(cards === undefined) {
+        return;
+    }
 
 
     cards.forEach((card) => {
@@ -55,7 +60,7 @@ const filterCards = (state) => {
 
 const mapStateToProps = (state) => {
     return({
-        cards: filterCards(state.cardtable)
+        cards: filterCards(state)
     })
 }
 

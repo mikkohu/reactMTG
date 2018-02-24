@@ -30,13 +30,13 @@ const requestCards = () => ({
 
 const receiveCards = (json) => ({
     type: 'RECEIVE_CARDS',
-    // cards: Object.values(json)
+    cards: Object.values(json)
 })
 
 export const fetchCards  = () => {
     return (async (dispatch) => {
         dispatch(requestCards())
         let response = await fetch('https://api.magicthegathering.io/v1/cards');
-        return dispatch(receiveCards(response.json))
+        return dispatch(receiveCards(await response.json()))
     })
 }
